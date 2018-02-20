@@ -13,4 +13,4 @@
     | APP_ENV=local
     */
 
-    Route::get('/sortablegrid', 'SortableGrid\Http\Controllers\ExampleController@index');
+    Route::get('/sortable-grid', 'SortableGrid\Http\Controllers\ExampleController@index');
