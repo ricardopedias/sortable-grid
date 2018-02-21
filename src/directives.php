@@ -35,6 +35,26 @@ if (env('APP_DEBUG') || env('APP_ENV') === 'local') {
         return "<{$open} echo view('$view')->render(); {$close}>";
     });
 
+    \Blade::directive('sg_info', function ($expression) {
+
+        $view = config('sortablegrid.views.info');
+
+        $open = "?php";
+        $close = "?";
+
+        return "<{$open} echo view('$view')->render(); {$close}>";
+    });
+
+    \Blade::directive('sg_pagination', function ($expression) {
+
+        $pagination = session('sg.pagination');
+
+        $open = "?php";
+        $close = "?";
+
+        return "<{$open} echo '$pagination'; {$close}>";
+    });
+
     /*
     |--------------------------------------------------------------------------
     | Tabela de dados

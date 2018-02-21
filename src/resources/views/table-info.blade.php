@@ -1,34 +1,48 @@
+@php
 
+    $total_registers = session('sg.total_registers');
+    $first_item      = session('sg.first_item');
+    $last_item       = session('sg.last_item');
+    $last_page       = session('sg.last_page');
+    $invalid_page    = session('sg.invalid_page');
 
-<button class="btn text-primary" style="background: transparent;">
+    // Redireciona se o numero de paginas não for válido
+    $script_redirect = '';
+    if ($invalid_page) {
 
-    <i class="fa fa-info-circle"></i>
+        $qstring = array_merge(request()->all(), ['page' => $last_page]); 
+        if (request()->route()->getName() == null) {
+            $url = trim(request()->route()->uri, '/');
+            $url = "/" . request()->route()->uri . "?" . http_build_query($qstring);
+        }
+        else {
+            $url = route(request()->route()->getName(), $qstring);
+        }
 
-    Exibindo de {{ $collection->firstItem() }} a {{ $collection->lastItem() }} 
+        $script_redirect .= '<script>';
+        $script_redirect .= "window.location.href = '{$url}';";
+        $script_redirect .= '</script>';
+    }
 
-    @if($collection->total() == 1)
-        de {{ $collection->total() }} registro
-    @else
-        de {{ $collection->total() }}  registros
-    @endif
+@endphp
 
-    @if($collection->lastPage() == 1)
-        em uma página
-    @else
-        em {{ $collection->lastPage() }} páginas
-    @endif
+    <button class="btn text-primary" style="background: transparent; box-shadow: none !important;">
 
-</button>
+        <i class="fa fa-info-circle"></i> Exibindo de {{ $first_item }} a {{ $last_item }}
 
-{{-- Redireciona se o numero de paginas não for válido --}}
-@if($collection->currentPage() > $collection->lastPage())
+        @if ($total_registers == 1)
+            de {{ $total_registers }} registro
+        @else
+            de {{ $total_registers }} registros
+        @endif
 
-    @php 
-        $qstring = array_merge(request()->all(), ['page' => $collection->lastPage()]); 
-    @endphp
+        @if($last_page == 1)
+            em uma página
+        @else
+            em {{ $last_page }} páginas
+        @endif
+                        
+    </button>
 
-    <script>
-        $(location).attr({ href : '{!! route(request()->route()->getName(), $qstring) !!}' });
-    </script>
-
-@endif
+    {{-- Redireciona se o numero de paginas não for válido --}}
+    {!! $script_redirect !!}

@@ -26,7 +26,7 @@
         
     </div>
 
-        @sg_table
+    @sg_table
     
         @foreach($collection as $item)
 
@@ -52,6 +52,22 @@
 
         @endforeach
                
-        @end_sg_table
+    @end_sg_table
+
+    <div class="row">
+
+        <div class="col">
+
+            @sg_info
+                
+        </div>
+
+        <div class="col">
+
+            @sg_pagination
+
+        </div>
+        
+    </div>
 
 @endcomponent
