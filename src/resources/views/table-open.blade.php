@@ -1,9 +1,12 @@
 
 @php
 
-    $fields     = session('sg.fields');
-    $searchable = session('sg.searchable');
-    $orderly   = array_flip(session('sg.orderly'));
+    $fields          = session('sg.fields');
+    $searchable      = session('sg.searchable');
+    $orderly         = array_flip(session('sg.orderly'));
+    
+    $order_field     = session('sg.order_field');
+    $order_direction = session('sg.order_direction');
 
     $cols = [];
 
@@ -12,6 +15,10 @@
         if (is_numeric($field)) {
             $field = \Illuminate\Support\Str::slug($label);
         }
+
+        $highlight = $field == $order_field 
+            ? 'sg-ordered sg-ordered-' . $order_direction
+            : '';
 
         if (isset($orderly[$field])) {
 
@@ -28,7 +35,7 @@
 
             $cols[] = (object) [
                 'url'   => $url,
-                'class' => "sg-orderly-field sg-{$field}-field",
+                'class' => "sg-orderly-field sg-{$field}-field {$highlight}",
                 'label' => $label
             ];
         }
@@ -43,6 +50,33 @@
     }
 
 @endphp
+
+<style>
+
+    .sg-orderly-field {
+        cursor: pointer;
+    }
+
+    .sg-orderly-field:hover {
+        background: rgba(0,0,0,0.1);
+    }
+
+    .sg-ordered {
+        background: rgba(0,0,0,0.025);
+    }
+
+    {{-- https://www.w3schools.com/charsets/ref_utf_arrows.asp --}}
+    .sg-ordered:after {
+        display: inline-block;
+        float: right;
+        content: "\2193";
+    }
+    
+    .sg-ordered-desc:after {
+        content: "\2191";
+    }
+
+</style>
 
 <div class="table-responsive">
 

@@ -57,8 +57,8 @@ abstract class SortableGridController extends BaseController
             }
         };
             
-        $order   = $request->get('order', $this->initial_field);
-        $by      = $request->get('by', $this->initial_order);
+        $order   = strtolower($request->get('order', $this->initial_field));
+        $by      = strtolower($request->get('by', $this->initial_order));
         $perpage = $request->get('perpage', $this->initial_perpage);
 
         $collection = $this->getSearchableCollection()
@@ -74,6 +74,8 @@ abstract class SortableGridController extends BaseController
             'sg.fields'          => $this->fields,
             'sg.searchable'      => $this->searchable_fields,
             'sg.orderly'         => $this->orderly_fields,
+            'sg.order_field'     => $order,
+            'sg.order_direction' => $by,
             'sg.total_registers' => $collection->total(),
             'sg.first_item'      => $collection->firstItem(),
             'sg.last_item'       => $collection->lastItem(),

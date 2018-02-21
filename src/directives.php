@@ -96,6 +96,8 @@ if (env('APP_DEBUG') || env('APP_ENV') === 'local') {
         session()->forget('sg.fields');
         session()->forget('sg.searchable');
         session()->forget('sg.orderly');
+        session()->forget('sg.order_field');
+        session()->forget('sg.order_direction');
         session()->forget('sg.total_registers');
         session()->forget('sg.first_item');
         session()->forget('sg.last_item');

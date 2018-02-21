@@ -13,7 +13,7 @@ class ExampleController extends SortableGridController
     protected $fields = [
         'id'         => 'ID',
         'name'       => 'Nome',
-        'e-mail'     => 'E-mail',
+        'email'     => 'E-mail',
         'created_at' => 'Criação',
         'Ações'
     ];
