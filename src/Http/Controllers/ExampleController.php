@@ -2,6 +2,8 @@
 
 namespace SortableGrid\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class ExampleController extends SortableGridController
 {
     protected $initial_field = 'id';
@@ -30,8 +32,6 @@ class ExampleController extends SortableGridController
         'created_at',
     ];
 
-    protected $searchable_view = 'sortablegrid::index';
-
     /**
      * Devolve a coleção que será usada para a busca.
      *
@@ -40,5 +40,16 @@ class ExampleController extends SortableGridController
     protected function getSearchableCollection()
     {
         return \App\User::query();
+    }
+
+    /**
+     * Display a listing of the resource. 
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $collection = $this->searchCollect($request);
+        return view('sortablegrid::index')->with('collection', $collection);
     }
 }

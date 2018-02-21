@@ -24,10 +24,10 @@ abstract class SortableGridController extends BaseController
 
     protected $orderly_fields = [];
 
-    protected $searchable_view = 'sortablegrid::index';
+    // protected $searchable_view = 'sortablegrid::index';
 
     /**
-     * Devolve a coleção que será usada para a busca.
+     * Deve devolver a coleção que será usada para a busca.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -38,7 +38,7 @@ abstract class SortableGridController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    protected function searchCollect(Request $request)
     {
         $fields = $this->searchable_fields;
 
@@ -85,6 +85,6 @@ abstract class SortableGridController extends BaseController
             'sg.perpage'         => $perpage,
         ]);
 
-        return view($this->searchable_view)->with('collection', $collection);
+        return $collection;
     }
 }
