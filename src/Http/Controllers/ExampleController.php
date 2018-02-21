@@ -49,7 +49,6 @@ class ExampleController extends SortableGridController
      */
     public function index(Request $request)
     {
-        $collection = $this->searchCollect($request);
-        return view('sortablegrid::index')->with('collection', $collection);
+        return $this->searchableView('sortablegrid::index');
     }
 }

@@ -36,10 +36,13 @@ abstract class SortableGridController extends BaseController
     /**
      * Display a listing of the resource.
      *
+     * @param string $view
      * @return \Illuminate\Http\Response
      */
-    protected function searchCollect(Request $request)
+    protected function searchableView($view)
     {
+        $request = request();
+
         $fields = $this->searchable_fields;
 
         $filters = function ($query) use ($request, $fields) {
@@ -85,6 +88,6 @@ abstract class SortableGridController extends BaseController
             'sg.perpage'         => $perpage,
         ]);
 
-        return $collection;
+        return view($view)->with('collection', $collection);
     }
 }
