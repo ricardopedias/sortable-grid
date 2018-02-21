@@ -7,11 +7,11 @@
 
 @endphp
 
-<div class="d-inline-block">
+<div class="sg-search d-inline-block">
 
     <form action="{{ $url }}">
 
-        <div class="input-group mb-3 table-search">
+        <div class="input-group mb-3 sg-search-group">
 
             <input type="text" name="q" class="form-control" placeholder="Digite...">
             

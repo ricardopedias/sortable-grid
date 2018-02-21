@@ -5,7 +5,7 @@
 
 @endphp
 
-<div class="d-inline-block">
+<div class="sg-perpage d-inline-block">
 
     <div class="dropdown">
 
