@@ -24,7 +24,7 @@ abstract class SortableGridController extends BaseController
 
     protected $orderly_fields = [];
 
-    protected $searchable_view = 'sortgrid::index';
+    protected $searchable_view = 'sortablegrid::index';
 
     /**
      * Devolve a coleção que será usada para a busca.
@@ -67,6 +67,8 @@ abstract class SortableGridController extends BaseController
             ->paginate($perpage)
             ->appends($request->all());
 
+        $view_pagination = config('sortablegrid.views.pagination');
+
         // Guarda os dados para o blade identificar
         session([
             'sg.fields'          => $this->fields,
@@ -77,7 +79,8 @@ abstract class SortableGridController extends BaseController
             'sg.last_item'       => $collection->lastItem(),
             'sg.last_page'       => $collection->lastPage(),
             'sg.invalid_page'    => ($collection->currentPage() > $collection->lastPage()),
-            'sg.pagination'      => $collection->links('sortgrid::table-pagination')
+            'sg.pagination'      => $collection->links($view_pagination),
+            'sg.perpage'         => $perpage,
         ]);
 
         return view($this->searchable_view)->with('collection', $collection);

@@ -30,7 +30,7 @@ class ExampleController extends SortableGridController
         'created_at',
     ];
 
-    protected $searchable_view = 'sortgrid::index';
+    protected $searchable_view = 'sortablegrid::index';
 
     /**
      * Devolve a coleção que será usada para a busca.

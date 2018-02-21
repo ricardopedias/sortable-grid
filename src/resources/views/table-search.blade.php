@@ -1,8 +1,15 @@
 
+@php
+
+    $url = (request()->route()->getName() == null)
+        ? "/" . trim(request()->route()->uri, '/')
+        : route(request()->route()->getName());
+
+@endphp
 
 <div class="d-inline-block">
 
-    <form action="{{ route(request()->route()->getName()) }}">
+    <form action="{{ $url }}">
 
         <div class="input-group mb-3 table-search">
 

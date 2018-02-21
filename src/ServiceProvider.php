@@ -11,15 +11,31 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/resources/views', 'sortgrid');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'sortablegrid');
 
-        // Em modo de desenvolvimento, as views são sempre apagadas
+        // Em modo de desenvolvimento, 
+        // as rotas de teste estão disponiveis
         if (env('APP_DEBUG') || env('APP_ENV') === 'local') {
             $this->loadRoutesFrom(__DIR__.'/routes.php');
         }
 
+        // Config
+        // php artisan vendor:publish
+        $this->publishes([__DIR__.'/config/sortablegrid.php' => config_path('sortablegrid.php')], 'sortablegrid');
+
         \SortableGrid::loadHelpers();
 
         \SortableGrid::loadBladeDirectives();
+    }
+
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        // Adiciona as configurações padrões no namespace sortablegrid
+        $this->mergeConfigFrom(__DIR__.'/config/sortablegrid.php', 'sortablegrid');
     }
 }

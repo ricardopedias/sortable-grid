@@ -1,11 +1,16 @@
 
+@php
+
+    $perpage = session('sg.perpage');
+
+@endphp
 
 <div class="d-inline-block">
 
     <div class="dropdown">
 
         <a class="btn btn-light dropdown-toggle" href="javascript:void(0)" id="table-perpage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Exibir {{ $collection->perPage() }} itens
+        Exibir {{ $perpage }} itens 
       </a>
 
         <div class="dropdown-menu bg-light" aria-labelledby="table-perpage">
@@ -14,10 +19,18 @@
 
                 @php 
                     $qstring = array_merge(request()->all(), ['perpage' => $value]); 
+                    if (request()->route()->getName() == null) {
+                        $url = trim(request()->route()->uri, '/');
+                        $url = "/" . $url . "?" . http_build_query($qstring);
+                    }
+                    else {
+                        $url = route(request()->route()->getName(), $qstring);
+                    }
+
                 @endphp
 
                 <a class="dropdown-item text-dark" 
-                   href="{{ route(request()->route()->getName(), $qstring) }}">{{ $value }}</a>
+                   href="{{ $url }}">{{ $value }}</a>
 
             @endforeach
             

@@ -1,12 +1,14 @@
-@component('sortgrid::document')
+@component('sortablegrid::document')
 
     @slot('title') Usuários @endslot
 
-    <div class="row mb-3">
+    <hr>
+
+    <div class="row">
 
         <div class="col">
 
-            {{-- ... --}}
+            @sg_perpage
 
         </div>
 
@@ -18,11 +20,13 @@
                 <span class="d-none d-lg-inline">Botão de Ação</span>
             </a>
 
+            @sg_search
+
         </div>
         
     </div>
 
-        @sghead
+        @sg_table
     
         @foreach($collection as $item)
 
@@ -48,6 +52,6 @@
 
         @endforeach
                
-        @sgfoot
+        @end_sg_table
 
 @endcomponent
