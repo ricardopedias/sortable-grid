@@ -13,7 +13,7 @@
         Exibir {{ $perpage }} itens 
       </a>
 
-        <div class="dropdown-menu bg-light" aria-labelledby="table-perpage">
+        <div class="dropdown-menu" aria-labelledby="table-perpage">
 
             @foreach([5,10,25,50,100] as $value)
 

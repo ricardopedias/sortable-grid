@@ -69,11 +69,13 @@
     .sg-ordered:after {
         display: inline-block;
         float: right;
-        content: "\2193";
+        /*content: "\2193";*/
+        content: "\1F817";
     }
     
     .sg-ordered-desc:after {
-        content: "\2191";
+        /*content: "\2191";*/
+        content: "\1F815";
     }
 
 </style>

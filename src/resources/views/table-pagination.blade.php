@@ -1,9 +1,9 @@
 
-<nav>
+<nav class="sg-pagination">
 
     @if ($paginator->hasPages())
 
-        <ul class="sg-pagination pagination justify-content-end">
+        <ul class="pagination justify-content-end">
         
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())

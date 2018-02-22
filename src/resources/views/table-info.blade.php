@@ -26,23 +26,26 @@
 
 @endphp
 
-    <button class="btn text-primary" style="background: transparent; box-shadow: none !important;">
+    <nav class="sg-info">
 
-        <i class="fa fa-info-circle"></i> Exibindo de {{ $first_item }} a {{ $last_item }}
+        <div class="text-primary p-1">
 
-        @if ($total_registers == 1)
-            de {{ $total_registers }} registro
-        @else
-            de {{ $total_registers }} registros
-        @endif
+            <i class="fa fa-info-circle"></i> Exibindo de {{ $first_item }} a {{ $last_item }}
 
-        @if($last_page == 1)
-            em uma página
-        @else
-            em {{ $last_page }} páginas
-        @endif
-                        
-    </button>
+            @if ($total_registers == 1)
+                de {{ $total_registers }} registro
+            @else
+                de {{ $total_registers }} registros
+            @endif
+
+            @if($last_page == 1)
+                em uma página
+            @else
+                em {{ $last_page }} páginas
+            @endif
+                            
+        </div>
+    </nav>
 
     {{-- Redireciona se o numero de paginas não for válido --}}
     {!! $script_redirect !!}
