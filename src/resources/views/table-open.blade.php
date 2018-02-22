@@ -36,7 +36,7 @@
             $cols[] = (object) [
                 'url'   => $url,
                 'class' => "sg-orderly-field sg-{$field}-field {$highlight}",
-                'label' => $label
+                'label' => ($label != '-' ? $label : '')
             ];
         }
         else {
@@ -44,7 +44,7 @@
             $cols[] = (object) [
                 'url'   => false,
                 'class' => "sg-unorderly-field sg-{$field}-field",
-                'label' => $label
+                'label' => ($label != '-' ? $label : '')
             ];
         }
     }
