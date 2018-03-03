@@ -2,7 +2,7 @@
 
 Este pacote que provê helpers para a criação de grades de dados (DataTables) com Laravel e Blade templates, adicionando recursos de busca e ordenação. As views e templates padrões são desenvolvidos com Bootstrap 4.
 
-O objetivo é facilitar a criação de tabelas de dados de forma elegante e concisa :)
+O objetivo é facilitar a criação de tabelas de dados de forma elegante :)
 
 ### Características
 
