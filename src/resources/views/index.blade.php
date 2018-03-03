@@ -1,6 +1,6 @@
 @component('sortablegrid::document')
 
-    @slot('title') Usuários @endslot
+    @slot('title') Grade de Dados @endslot
 
     <hr>
 

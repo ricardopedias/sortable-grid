@@ -12,29 +12,53 @@ abstract class SortableGridController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /** 
+     * Campo de ordenação padrão
+     * @var string
+     */
     protected $initial_field = 'id';
 
+    /**
+     * Classificação de ordenação padrão 
+     * @var string
+     */
     protected $initial_order = 'desc';
 
+    /**
+     * Número de páginas padrão 
+     * @var string
+     */
     protected $initial_perpage = 10;
 
+    /**
+     * Todas as colunas a serem renderizadas no grid.
+     * @var array 
+     */
     protected $fields = [];
 
+    /**
+     * Apenas os campos que serão consultados ao efetuar uma busca.
+     * @var array 
+     */
     protected $searchable_fields = [];
 
+    /**
+     * Apenas os campos que poderão ser ordenados pelo usuário.
+     * @var array 
+     */
     protected $orderly_fields = [];
 
-    // protected $searchable_view = 'sortablegrid::index';
-
     /**
-     * Deve devolver a coleção que será usada para a busca.
+     * A implementação deste método abstrato deve devolver 
+     * o builder que será manipulado pelo mecanismo interno.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @see SortableGridController -> searchableView
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    abstract protected function getSearchableCollection();
+    abstract protected function getSearchableBuilder();
 
     /**
-     * Display a listing of the resource.
+     * Renderiza a view com as informações da grade de dados
      *
      * @param string $view
      * @return \Illuminate\Http\Response
@@ -64,7 +88,7 @@ abstract class SortableGridController extends BaseController
         $by      = strtolower($request->get('by', $this->initial_order));
         $perpage = $request->get('perpage', $this->initial_perpage);
 
-        $collection = $this->getSearchableCollection()
+        $collection = $this->getSearchableBuilder()
             ->where($filters)
             ->orderBy($order, $by)
             ->paginate($perpage)

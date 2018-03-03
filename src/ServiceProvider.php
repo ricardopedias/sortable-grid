@@ -19,9 +19,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             $this->loadRoutesFrom(__DIR__.'/routes.php');
         }
 
-        // Config
-        // php artisan vendor:publish
-        $this->publishes([__DIR__.'/config/sortablegrid.php' => config_path('sortablegrid.php')], 'sortablegrid');
+        // php artisan vendor:publish --tag=laracl-config
+        $this->publishes([__DIR__.'/config/sortablegrid.php' => config_path('sortablegrid.php')], 'sortablegrid-config');
 
         \SortableGrid::loadHelpers();
 
