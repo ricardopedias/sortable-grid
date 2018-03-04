@@ -6,7 +6,7 @@
 
 A primeira coisa a ser feita é criar uma instalação limpa do Laravel:
 
-```
+```bash
 $ composer create-project --prefer-dist laravel/laravel /caminho/do/projeto
 $ cd /caminho/do/projeto
 $ cp .env.example .env
@@ -19,7 +19,7 @@ $ chmod 777 -Rf /caminho/do/projeto/storage
 
 Na raiz do projeto Laravel, crie o diretório 'packages'. Este diretório será usado para desenvolver pacotes:
 
-```
+```bash
 $ mkdir /caminho/do/projeto/packages
 ```
 
@@ -27,14 +27,14 @@ $ mkdir /caminho/do/projeto/packages
 
 No novo diretório de pacotes, é preciso criar a estrutura do pacote 'sortable-grid'. O formato deve ser '[vendor]/[pacote]', ou seja, a estrutura do pacote ficará assim '/plexi/sortable-grid':
 
-```
+```bash
 $ cd /caminho/do/projeto/packages
 $mkdir -p plexi/sortable-grid
 ```
 
 No diretório 'sortable-grid', faça um clone do repositório:
 
-```
+```bash
 $ cd /caminho/do/projeto/packages/plexi/sortable-grid
 $ git clone https://github.com/rpdesignerfly/sortable-grid.git .
 ```
@@ -46,7 +46,7 @@ No arquivo "composer.json", abaixo da seção 'config', adicione 'minimum-stabil
 > **Atenção:** 
 > Não esqueça da barra (/) no final:
 
-```
+```php
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
@@ -68,7 +68,7 @@ No arquivo "composer.json", abaixo da seção 'config', adicione 'minimum-stabil
 
 Com o repositório configurado, use normalmente o comando para instalação:
 
-```
+```bash
 $ cd /caminho/do/projeto
 $ composer require plexi/sortable-grid
 ```
@@ -77,14 +77,14 @@ $ composer require plexi/sortable-grid
 Em seguida, basta executar a instalação ou atualização do composer para que o pacote seja 
 adicionado ao autoloader do composer:
 
-```
+```bash
 $ cd /caminho/do/projeto
 $ composer install
 ```
 
 ou
 
-```
+```bash
 $ cd /caminho/do/projeto
 $ composer update
 ```

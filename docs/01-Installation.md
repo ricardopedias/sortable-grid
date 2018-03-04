@@ -12,7 +12,7 @@ O pacote Sortable Grid possui os seguintes requisitos básicos:
 Para baixar o pacote, será necessário usar o [Composer](http://getcomposer.org/).
 Com o composer devidamente instalado no sistema operacional, execute o seguinte comando:
 
-```
+```bash
 $ cd /diretorio/meu/projeto/laravel/
 $ composer require plexi/sortable-grid
 ```
@@ -22,7 +22,7 @@ arquivo composer.json do Laravel e em seguida efetuar o processo de instalação
 
 Para instalar uma versão específica, basta substituir pelo comando:
 
-```
+```bash
 $ composer require plexi/sortable-grid:1.1.6
 ```
 
@@ -32,7 +32,7 @@ O Sortable Grid possui um grid de teste para a verificação das funcionalidades
 
 Para acessar o grid de exemplo, basta seguir a url:
 
-```
+```text
 http://www.meuprojeto.com.br/sortable-grid
 ```
 

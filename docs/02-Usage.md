@@ -89,7 +89,7 @@ protected $fields = [
 ];
 ```
 
-No código acima, 'name'=>'Nome' é uma coluna interativa e 'Ações' é uma coluna estática (não ordenável), apenas para exibição.
+No código acima, 'name'=>'Nome' é uma coluna interativa e 'Ações' é uma coluna textual (não ordenável), apenas para exibição.
 
 **$searchable_fields** 
 
@@ -139,7 +139,7 @@ public function index(Request $request)
 
 ## Diretivas para layout no Blade
 
-O Sortable Grid possui directivas especias para exibir as informação e os widgets da grade de dados na implementação de templates do blade.
+O Sortable Grid possui directivas especias para exibir as informações e os widgets que compõem a grade de dados na implementação de templates do blade.
 
 ### Seletor de Itens por Página
 
@@ -159,7 +159,7 @@ O Sortable Grid possui directivas especias para exibir as informação e os widg
 @sg_info
 ```
 
-### Paginador de Resgistros
+### Paginador de Registros
 
 ```text
 @sg_pagination
@@ -184,7 +184,7 @@ O Sortable Grid possui directivas especias para exibir as informação e os widg
 
 Para personalizar o Sortable Grid, será preciso usar o arquivo de configuração, que deve ser publicado através do seguinte comando:
 
-```
+```bash
 php artisan vendor:publish --tag=sortablegrid-config
 ```
 
