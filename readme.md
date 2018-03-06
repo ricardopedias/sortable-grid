@@ -12,7 +12,7 @@ Laravel Sortable Grid é um pacote que provê helpers para a criação de grades
 > **Atenção**:
 > Esta biblioteca está em fase de desenvolvimento. Use-a por sua conta e risco!
 
-Sinta-se à vontade para conferir os [releases](https://github.com/rpdesignerfly/sortable-grid/releases), a [licença](license.md) e a [documentação](https://rpdesignerfly.github.io/sortable-grid).
+Sinta-se à vontade para conferir os [releases](https://github.com/rpdesignerfly/sortable-grid/releases), a [licença](license.md) e a [documentação](docs/01-About.md).
 
 ### Características
 
@@ -24,9 +24,9 @@ Sinta-se à vontade para conferir os [releases](https://github.com/rpdesignerfly
 
 ## Sumário
 
-  1. [Instalação](docs/01-Installation.md)
-  2. [Como Usar](docs/02-Usage.md)
-  3. [Exemplos](docs/03-Examples.md)
+  1. [Sobre](docs/01-About.md)
+  2. [Instalação](docs/02-Installation.md)
+  3. [Como Usar](docs/03-Usage.md)
   4. [Extras](docs/04-Extras.md)
   
 

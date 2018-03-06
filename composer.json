@@ -1,6 +1,6 @@
 {
     "name": "plexi/sortable-grid",
-    "description": "Helpers para criar grades de dados ordenáveis",
+    "description": "Grade de dados com recursos de pesquisa, ordenação e seletor de registros para Laravel e Blade templates",
     "keywords": ["laravel","cruds","grids","data-tables","blade","helpers"],
     "license": "MIT",
     "authors": [

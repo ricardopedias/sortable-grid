@@ -1,4 +1,4 @@
-# 2. Como Usar
+# 3. Como Usar 
 
 ## Configuração
 
@@ -193,10 +193,9 @@ Após executar este comando, o arquivo de configuração poderá ser encontrado 
 
 ## Sumário
 
-1. [Sobre](00-Home.md)
-2. [Instalação](01-Installation.md)
-3. [Como Usar](02-Usage.md)
-4. [Exemplos](03-Examples.md)
-5. [Extras](04-Extras.md)
+  1. [Sobre](01-About.md)
+  2. [Instalação](02-Installation.md)
+  3. [Como Usar](03-Usage.md)
+  4. [Extras](04-Extras.md)
 
 ...
