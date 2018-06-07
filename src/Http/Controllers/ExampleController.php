@@ -1,72 +1,12 @@
 <?php
-
 namespace SortableGrid\Http\Controllers;
 
 use Illuminate\Http\Request;
+use SortableGrid\Traits\HasSortableGrid;
 
-class ExampleController extends SortableGridController
+class ExampleController extends Controller
 {
-    /** 
-     * Campo de ordenação padrão
-     * @var string
-     */
-    protected $initial_field = 'id';
-
-    /**
-     * Classificação de ordenação padrão 
-     * @var string
-     */
-    protected $initial_order = 'desc';
-
-    /**
-     * Número de páginas padrão 
-     * @var string
-     */
-    protected $initial_perpage = 10;
-
-    /**
-     * Todas as colunas a serem renderizadas no grid.
-     * @var array 
-     */
-    protected $fields = [
-        'id'         => 'ID',
-        'name'       => 'Nome',
-        'email'      => 'E-mail',
-        'created_at' => 'Criação',
-        'Ações'
-    ];
-
-    /**
-     * Apenas os campos que serão consultados ao efetuar uma busca.
-     * @var array 
-     */
-    protected $searchable_fields = [
-        'name',
-        'email',
-    ];
-
-    /**
-     * Apenas os campos que poderão ser ordenados pelo usuário.
-     * @var array 
-     */
-    protected $orderly_fields = [
-        'id',
-        'name',
-        'email',
-        'created_at',
-    ];
-
-    /**
-     * A implementação deste método abstrato deve devolver 
-     * o builder que será manipulado pelo mecanismo interno.
-     *
-     * @see SortableGridController -> searchableView
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    protected function getSearchableBuilder()
-    {
-        return \App\User::query();
-    }
+    use HasSortableGrid;
 
     /**
      * Renderiza a view com as informações da grade de dados
@@ -76,6 +16,26 @@ class ExampleController extends SortableGridController
      */
     public function index(Request $request)
     {
-        return $this->searchableView('sortablegrid::index');
+        $this->setInitials('id', 'desc', 10);
+
+        $this->addGridField('ID', 'id');
+        $this->addGridField('Nome', 'name');
+        $this->addGridField('E-mail', 'email');
+        $this->addGridField('Criação', 'created_at');
+        $this->addGridField('Ações');
+
+        $this->addSearchField('name');
+        $this->addSearchField('email');
+
+        $this->addOrderlyField('id');
+        $this->addOrderlyField('name');
+        $this->addOrderlyField('email');
+        $this->addOrderlyField('created_at');
+
+        $this->setDataProvider(\App\User::query());
+        // $this->setDataProvider(\DB::table('users')->select());
+        // $this->setDataProvider('users');
+
+        return $this->gridView('sortablegrid::index');
     }
 }
