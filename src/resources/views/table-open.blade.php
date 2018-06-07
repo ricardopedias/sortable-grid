@@ -4,7 +4,7 @@
     $fields          = session('sg.fields');
     $searchable      = session('sg.searchable');
     $orderly         = array_flip(session('sg.orderly'));
-    
+
     $order_field     = session('sg.order_field');
     $order_direction = session('sg.order_direction');
 
@@ -16,7 +16,7 @@
             $field = \Illuminate\Support\Str::slug($label);
         }
 
-        $highlight = $field == $order_field 
+        $highlight = $field == $order_field
             ? 'sg-ordered sg-ordered-' . $order_direction
             : '';
 
@@ -69,13 +69,11 @@
     .sg-ordered:after {
         display: inline-block;
         float: right;
-        /*content: "\2193";*/
-        content: "\1F817";
+        content: "\2193";
     }
-    
+
     .sg-ordered-desc:after {
-        /*content: "\2191";*/
-        content: "\1F815";
+        content: "\2191";
     }
 
 </style>
