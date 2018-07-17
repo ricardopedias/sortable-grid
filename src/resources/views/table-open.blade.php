@@ -76,6 +76,43 @@
         content: "\2191";
     }
 
+    @media only screen and (max-width: 992px) {
+
+        .sg-sortable-table th,
+        .sg-sortable-table td {
+            display: none;
+        }
+
+        .sg-sortable-table th:last-child,
+        .sg-sortable-table td:last-child {
+            display: table-cell;
+        }
+    }
+
+    @media only screen and (max-width: 720px) {
+
+        .sg-sortable-table th:nth-child(-n+2),
+        .sg-sortable-table td:nth-child(-n+2) {
+            display: table-cell;
+        }
+    }
+
+    @media (min-width: 721px) and (max-width: 850px) {
+
+        .sg-sortable-table th:nth-child(-n+3),
+        .sg-sortable-table td:nth-child(-n+3) {
+            display: table-cell;
+        }
+    }
+
+    {{-- bootstrap md --}}
+    @media (min-width: 851px) and (max-width: 992px) {
+        .sg-sortable-table th:nth-child(-n+4),
+        .sg-sortable-table td:nth-child(-n+4) {
+            display: table-cell;
+        }
+    }
+
 </style>
 
 <div class="table-responsive">
