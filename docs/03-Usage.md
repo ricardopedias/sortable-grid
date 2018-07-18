@@ -1,194 +1,234 @@
 # 3. Como Usar 
 
-## Configuração
+## 3.1. Ativando o Sortable Grid
 
-O Sortable Grid não necessita de nenhuma configuração para funcionar, a menos que se queira personalizar a sua aparência padrão. Para isso, veja a seção "Personalizando" neste mesmo documento.
+Para ativar o Sortable Grid em qualquer classe PHP, basta usar o Trait HasSortableGrid como no exemplo abaixo:
 
-## Preparando o Controlador
-
-### Extendendo o Controlador
-
-Normalmente, um controlador é implementado extendendo a classe \App\Http\Controllers\Controller. 
-
-No entanto, os controladores que usarem o Sortable Grid, deverão implementar a classe abstrata \SortableGrid\Http\Controllers\SortableGridController que possui rotinas internas para gerar automaticamente as informações necessárias para a grade de dados (como paginação, itens por páginas, termos pesquisados, etc).
 
 ```php
-use SortableGrid\Http\Controllers\SortableGridController;
+use SortableGrid\Traits\HasSortableGrid;
 
-class ExampleController extends SortableGridController
+class ExampleController extends Controller
 {
+    use HasSortableGrid;
+    
     ...
 }
 ```
 
-### As propriedades de configuração
+### 3.2. Implementando uma grade de dados
 
-O segundo passo será setar as propriedades de configuração para dizer ao Sortable Grid como os campos deverão se comportar:
+Após adicionar o Trait, os métodos de configuração estarão disponiveis para utilização. Abaixo, um exemplo completo da implementaão de uma grade com a lista de usuários do sistema:
 
 ```php
-class ExampleController extends SortableGridController
+use SortableGrid\Traits\HasSortableGrid;
+
+class ExampleController extends Controller
 {
-    protected $initial_field = 'id';
-
-    protected $initial_order = 'desc';
-
-    protected $initial_perpage = 10;
-
-    protected $fields = [
-        'id'         => 'ID',
-        'name'       => 'Nome',
-        'email'      => 'E-mail',
-        'created_at' => 'Criação',
-        'Ações'
-    ];
-
-    protected $searchable_fields = [
-        'name',
-        'email',
-    ];
-
-    protected $orderly_fields = [
-        'id',
-        'name',
-        'email',
-        'created_at',
-    ];
-```
-
-**$initial_field** 
-
-Define o campo que será ordenado por padrão quando a grade de dados for exibida. Deve conter o nome real do campo na tabela do banco de dados. Caso não seja setado, o valor será 'id';
-
-**$initial_order** 
-
-Define a classificação de ordenação padrão. Deve ser 'asc' ou 'desc'; Caso não seja setado, o valor será 'desc';
-
-**$initial_perpage** 
-
-Define o número de itens por página padrão. Deve conter um valor inteiro; Caso não seja setado, o valor será 10;
-
-**$fields** 
-
-Define as colunas que deverão ser renderizadas na grade de dados. As colunas podem ser interativas (usuário pode ordenar) ou apenas textuais.
-
-***Colunas interativas*** são definidas setando em suas chaves o campo real do banco de dados:
-
-```php
-protected $fields = [
-    'name' => 'Nome',
-];
-```
-No código acima, 'name' é o campo real da tabela no banco de dados e 'Nome' é o texto que será exibido como título da coluna. O usuário poderá ordenar esta coluna clicando em seu título.
-
-***Colunas textuais*** são definidas omitindo suas chaves:
-
-```php
-protected $fields = [
-    'name' => 'Nome',
-    'Ações'
-];
-```
-
-No código acima, 'name'=>'Nome' é uma coluna interativa e 'Ações' é uma coluna textual (não ordenável), apenas para exibição.
-
-**$searchable_fields** 
-
-Define os campos que serão consultados ao efetuar uma busca. Quando o usuário efetuar a busca, uma pesquisa do tipo 'like' será efetuada no banco de dados usando as colunas especificadas aqui.
-
-Deve ser um array simples, apenas com os nomes reais dos campos no banco de dados.
-
-```php
-protected $searchable_fields = [
-    'name',
-    'email',
-];
-```
-
-**$orderly_fields** 
-
-Define os campos que poderão ser ordenados pelo usuário. Deve ser um array simples, apenas com os nomes reais dos campos no banco de dados. Os campos contidos aqui só serão invocados de fato, se também forem campos interativos da propriedade ***$fields***.
-
-```php
-protected $orderly_fields = [
-   'id',
-   'name',
-   'email',
-   'created_at',
-];
-```
+    use HasSortableGrid;
 
 
-### Implementação da Lista de Registros
+    public function index(Request $request)
+    {
+        $this->setInitials('id', 'desc', 10);
 
+        // Seta os campos que estarão disponíveis na grade de dados
+        $this->addGridField('ID', 'id');
+        $this->addGridField('Nome', 'name');
+        $this->addGridField('Criação', 'created_at');
+        $this->addGridField('Ações');
 
-```php
-protected function getSearchableBuilder()
-{
-    return \App\User::query();
+        // Seta os campos usados para consultas de busca
+        $this->addSearchField('id');
+        $this->addSearchField('name');
+
+        // Seta os campos que poderão ser ordenáveis via clique do mouse
+        $this->addOrderlyField('id');
+        $this->addOrderlyField('name');
+        $this->addOrderlyField('created_at');
+
+        // Seta o query builder para o sortable grid
+        $provider = \App\Users::query();
+        $this->setDataProvider($provider);
+
+        // Devolve a visão especial da grade de dados
+        return $this->gridView('users.index');
+    }
+
 }
 ```
 
-### Renderizando a View
+
+**setInitials()** 
+
+Define o campo que será ordenado por padrão quando a grade de dados for exibida. 
+Deve conter o **nome real do campo** na tabela do banco de dados, a **ordenação padrão** e o **limite de registros** para paginação padrão. Caso este método não seja invocado, os valores padrões serão setInitials('id', 'asc', 15);
 
 ```php
-public function index(Request $request)
-{
-    return $this->searchableView('usuarios.index');
-}
+
+$this->setInitials('id', 'desc', 10);
+
 ```
 
-## Diretivas para layout no Blade
+**addGridField()** 
 
-O Sortable Grid possui directivas especias para exibir as informações e os widgets que compõem a grade de dados na implementação de templates do blade.
+Define as colunas que deverão ser renderizadas na grade de dados. As colunas podem ser interativas (usuário pode ordenar) ou apenas textuais. As ***Colunas interativas*** são definidas setando os dois parâmetros do método, sendo o segundo correspondente ao **nome real do campo** da tabela no banco de dados:
 
-### Seletor de Itens por Página
+```php
 
-```text
+$this->addGridField('Criação', 'created_at');
+
+```
+No código acima, *created_at* é o campo real da tabela no banco de dados e *Criação* é o texto que será exibido como título da coluna. O usuário poderá ordenar esta coluna clicando na célula correspondente do cabeçalho.
+
+As ***Colunas textuais*** são definidas ao setar apenas o primeiro parâmetro do método:
+
+```php
+
+$this->addGridField('Ações');
+
+```
+
+No código acima, *Ações* é uma coluna textual (não ordenável), apenas para exibição.
+
+**addSearchField()** 
+
+Define os campos que serão consultados ao efetuar uma busca. Quando o usuário efetuar a busca, uma pesquisa do tipo 'like' será efetuada no banco de dados usando as colunas especificadas na invocação deste método:
+
+
+```php
+
+$this->addSearchField('id');
+$this->addSearchField('name');
+        
+```
+
+**addOrderlyField()** 
+
+Define os campos que poderão ser ordenados pelo usuário atravé de um clique no cabeçalho correspondente na grade de dados. Os campos contidos aqui só serão ordenáveis de fato, se também forem campos interativos setados com o método  ***addGridField()***.
+
+```php
+
+$this->addOrderlyField('id');
+$this->addOrderlyField('name');
+$this->addOrderlyField('created_at');
+
+```
+
+***setDataProvider()***
+
+Disponibiliza para o mecanismo de pesquisa do Sortable Grid um objeto Builder que será usado para gerar a paginação e as buscas. O objeto pode ser um **\Illuminate\Database\Eloquent\Builder** ou um **\Illuminate\Database\Query\Builder**.
+
+Internamente, o Sortable Grid irá adicionar a limitação e os filtros necessários para os dados serem exibidos na grade de dados.
+
+```php
+
+$provider = \App\Users::query(); // Objeto \Illuminate\Database\Eloquent\Builder com os dados do Modelo Users
+$this->setDataProvider($provider);
+
+```
+
+***gridView()***
+
+Informa ao Sortable Grid qual visão utilizar para desenhar a grade de dados. O mecanismo irá renderizar o código HTML usando uma estrutura preparada com os eventos corretos nos cabeçalhos da tabela, de acordo com as informações setadas pelos métodos acima.
+
+```php
+
+return $this->gridView('users.index');
+
+```
+
+## 3.3. Implementando o template da grade de dados
+
+O método gridView() vai localizar a visão especificada e disponibilizar para ela automaticamente a variável **$collection**, que contémm a lista de registros com as colunas especificadas pelas chamadas ao método **addGridField**.
+
+No caso do exemplo, conterá três colunas: id, name e created_at.
+
+
+***Diretiva @sg_table***
+
+Na visão, será necessário escrever o código HTML apenas para as linhas com a tag `<tr>`, dentro do loop efetuado com a variável **$collection**.
+
+O invólucro com a tag `<table>` juntamente com a linha contendo os cabeçalhos `<th>` são desenhados automaticamente pela diretiva `@sg_table` e fechados com a diretiva `@end_sg_table`, que devem ser adicionadas envolvendo o loop.
+
+Abaixo, um exemplo de implementação da visão para grade de dados:
+
+
+```html
+
+    @sg_table
+
+        @foreach($collection as $item)
+
+            <tr>
+                <td class="text-center">{{ $item->id }}</td>
+
+                <td>{{ $item->name }}</td>
+
+                <td>{{ $item->created_at->format('d/m/Y H:i:s') }}</td>
+
+                <td class="text-center">
+                    
+                    <a href="/usuarios/efetuar-acao/23" class="btn btn-info btn-sm" title="Botão de Ação">
+                        <i class="fa fa-plus"></i>
+                        <span class="d-none d-lg-inline">Botão de Ação</span>
+                    </a>
+
+                </td>
+            </tr>
+
+        @endforeach
+               
+    @end_sg_table
+
+```
+
+Além da grade de dados, o Sortable Grid disponibiliza também outras diretivas, para auxiliar na exibição de informações sobre os registros, filtrar informações, controlar as páginas disponiveis, etc.
+
+***Diretiva @sg_perpage***
+
+Desenha um menu para o usuário selecionar o número de registros por página.
+
+```html
 @sg_perpage
 ```
 
-### Input para Pesquisa
+***Diretiva @sg_search***
+
+Desenha um *input* para entrada de texto onde o usuário pode fornecer uma palavra que será pesquisada nos resultados.
 
 ```text
 @sg_search
 ```
 
-### Display de Informações
+***Diretiva @sg_info***
+
+Desenha as informações sobre o estado atual da grade de dados, como o número de resultados encontrados, o número de páginas, etc.
 
 ```text
 @sg_info
 ```
 
-### Paginador de Registros
+***Diretiva @sg_pagination***
+
+Desenha um paginador, para que o usuário possa navegar facilmente entre os resultados da grade de dados.
 
 ```text
 @sg_pagination
 ```
 
-### Invólucro da Tabela
 
-```text
-@sg_table
+## 3.4. Personalizando a grade de dados
 
-   <tr>
-      <td></td>
-      ...
-   </tr>
+Caso seja necesário um refinamento maior na grade de dados (como por exemplo utilizar outro framework diferente do Bootstrap 4) é possível fazê-lo através do arquivo de configuração do Sortable Grid. 
 
-@end_sg_table
-
-```
-
-
-## Personalizando
-
-Para personalizar o Sortable Grid, será preciso usar o arquivo de configuração, que deve ser publicado através do seguinte comando:
+Para usar o arquivo de configuração, basta publicá-lo usando o *artisan*:
 
 ```bash
 php artisan vendor:publish --tag=sortablegrid-config
 ```
 
-Após executar este comando, o arquivo de configuração poderá ser encontrado em config/sortablegrid.php.
+Após executar este comando, o arquivo de configuração poderá ser encontrado em `config/sortablegrid.php` no seu projeto Laravel.
 
 
 ## Sumário
