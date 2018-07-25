@@ -7,6 +7,8 @@
 
 *By [Ricardo Pereira Dias &copy;](https://github.com/rpdesignerfly)*
 
+> Este pacote esta em fase de desenvolvimento. Use esta biblioteca por sua conta e risco!
+
 Sortable Grid é um pacote que provê helpers para a criação de grades de dados (DataTables) com Laravel e Blade templates, adicionando recursos de busca e ordenação. As views e templates são desenvolvidos com Bootstrap 4. 
 
 
