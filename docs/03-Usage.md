@@ -128,6 +128,16 @@ $this->setDataProvider($provider);
 
 ```
 
+### DataProvider com relacionamentos:
+
+Se o Builder setado como provedor de dados possuir **joins**, seus campos podem ser declarados (nos métodos setInitials, addGridField, addSearchField e addOrderlyField) com suas respecivas **tabelas ou aliases**. Observe no exemplo abaixo:
+
+```
+$this->addGridField('Categoria', 'categories.label');
+
+$this->addOrderlyField('users.created_at');
+```
+
 ***gridView()***
 
 Informa ao Sortable Grid qual visão utilizar para desenhar a grade de dados. O mecanismo irá renderizar o código HTML usando uma estrutura preparada com os eventos corretos nos cabeçalhos da tabela, de acordo com as informações setadas pelos métodos acima.
